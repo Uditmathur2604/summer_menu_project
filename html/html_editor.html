@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Editor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .editor-container, .viewer-container {
+            flex: 1;
+            padding: 20px;
+            overflow: auto;
+            height: 80vh;
+        }
+        .editor {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            height: 100%;
+            width: 100%;
+            resize: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            outline: none;
+        }
+        .viewer {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            height: 100%;
+            width: 100%;
+        }
+        .viewer iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .toolbar {
+            background-color: #007bff;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            font-size: 1.2em;
+        }
+        .toolbar p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="editor-container">
+            <div class="toolbar">
+                <p>HTML Editor</p>
+            </div>
+            <textarea id="htmlCode" class="editor" placeholder="Type your HTML code here..."></textarea>
+        </div>
+        <div class="viewer-container">
+            <div class="toolbar">
+                <p>Preview</p>
+            </div>
+            <div class="viewer">
+                <iframe id="htmlViewer"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('htmlCode').addEventListener('input', function() {
+            var code = document.getElementById('htmlCode').value;
+            var iframe = document.getElementById('htmlViewer').contentWindow.document;
+            iframe.open();
+            iframe.write(code);
+            iframe.close();
+        });
+    </script>
+</body>
+</html>
