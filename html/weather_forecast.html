@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            width: 350px;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 2rem);
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .btn {
+            background: #e74c3c;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        #result {
+            margin-top: 1.5rem;
+            color: #2c3e50;
+            font-size: 1rem;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Forecast</h1>
+        <form id="weatherForm">
+            <label for="city">Enter city:</label>
+            <input type="text" id="city" name="city" required>
+            <button type="submit" class="btn">Get Weather</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('weatherForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var city = document.getElementById('city').value;
+            fetch('/cgi-bin/weather_forecast.py?city=' + encodeURIComponent(city))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('result').innerText = data.error;
+                    } else {
+                        var resultText = `
+                        City: ${data.name}
+                        Temperature: ${data.main.temp} °C
+                        Humidity: ${data.main.humidity} %
+                        Weather: ${data.weather[0].description}
+                        Wind Speed: ${data.wind.speed} m/s
+                        `;
+                        document.getElementById('result').innerText = resultText;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
