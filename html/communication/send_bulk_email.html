@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Bulk Email</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f6d365, #fda085);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            width: 400px;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: bold;
+        }
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            width: calc(100% - 2rem);
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .btn {
+            background: #3498db;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        #result {
+            margin-top: 1.5rem;
+            color: #2c3e50;
+            font-size: 1rem;
+            white-space: pre-wrap; /* To handle text formatting */
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Send Bulk Email</h1>
+        <form id="emailForm">
+            <label for="fromEmail">From Email:</label>
+            <input type="email" id="fromEmail" name="fromEmail" placeholder="Enter Your Email" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter Your Password" required>
+            <br>
+            <label for="recipientList">Recipient Emails:</label>
+            <textarea id="recipientList" name="recipientList" rows="4" cols="50" placeholder="Enter recipient emails separated by commas" required></textarea>
+            <br>
+            <button type="submit" class="btn">Send Bulk Email</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var params = new URLSearchParams(formData);
+
+            fetch('/cgi-bin/send_bulk_email.py', {
+                method: 'POST',
+                body: params
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('result').innerText = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
