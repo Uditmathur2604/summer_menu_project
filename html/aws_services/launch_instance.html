@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch AWS Instance</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            transition: transform 0.3s;
+            width: 100%;
+            max-width: 500px;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 2rem);
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .btn {
+            background: #3498db;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        #result {
+            margin-top: 2rem;
+            color: #2c3e50;
+            font-size: 1rem;
+            white-space: pre-wrap; /* To handle text formatting */
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Launch AWS Instance</h1>
+        <form id="launchForm">
+            <label for="instanceType">Instance Type:</label>
+            <input type="text" id="instanceType" name="instanceType" placeholder="Enter Instance Type" required>
+            <br>
+            <label for="imageId">Image ID:</label>
+            <input type="text" id="imageId" name="imageId" placeholder="Enter Image ID" required>
+            <br>
+            <label for="aws_access_key">AWS Access Key:</label>
+            <input type="text" id="aws_access_key" name="aws_access_key" placeholder="Enter AWS Access Key" required>
+            <br>
+            <label for="aws_secret_key">AWS Secret Key:</label>
+            <input type="text" id="aws_secret_key" name="aws_secret_key" placeholder="Enter AWS Secret Key" required>
+            <br>
+            <label for="regionName">Region Name:</label>
+            <input type="text" id="regionName" name="regionName" placeholder="Enter Region Name" required>
+            <br>
+            <button type="submit" class="btn">Launch</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('launchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var params = new URLSearchParams(formData);
+
+            fetch('/cgi-bin/launch_instance.py', {
+                method: 'POST',
+                body: params
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
