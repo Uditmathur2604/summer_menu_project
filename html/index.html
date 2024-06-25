@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 40px;
+            font-size: 3em;
+            text-align: center;
+        }
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 80%;
+        }
+        button {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            transform: scale(1.05);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            button {
+                width: 100%;
+                padding: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Main Page</h1>
+    <div class="button-container">
+        <button onclick="goToAWS()">AWS Services</button>
+        <button onclick="goToCommunication()">Communication Services</button>
+        <button onclick="goToLinux()">Linux Services</button>
+        <button onclick="goToFileManagement()">File Management</button>
+        <button onclick="goToGoogleSearch()">Google Search</button>
+        <button onclick="geoCoordinates()">Geo Coordinates</button>
+        <button onclick="goToHtmlEditor()">HTML Editor</button>
+        <button onclick="weatherForecast()">Weather Forecast</button>
+    </div>
+    <script>
+        function goToAWS() {
+            window.location.href = "aws_services.html";
+        }
+        function goToCommunication() {
+            window.location.href = "communication_services.html";
+        }
+        function goToLinux() {
+            window.location.href = "linux_services.html";
+        }
+        function goToFileManagement() {
+            window.location.href = "file_services.html";
+        }
+        function goToGoogleSearch() {
+            window.location.href = "google_search.html";
+        }
+        function geoCoordinates() {
+            window.location.href = "geo_coordinates.html";
+        }
+        function goToHtmlEditor() {
+            window.location.href = "html_editor.html";
+        }
+        function weatherForecast() {
+            window.location.href = "weather_forecast.html";
+        }
+    </script>
+</body>
+</html>
