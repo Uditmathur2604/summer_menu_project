@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Services</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 40px;
+            font-size: 3em;
+            text-align: center;
+        }
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 80%;
+        }
+        button {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+            transform: scale(1.05);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            button {
+                width: 100%;
+                padding: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>AWS Services</h1>
+    <div class="button-container">
+        <button onclick="launchInstance()">Launch AWS Instance</button>
+        <button onclick="getLogs()">Get Logs</button>
+        <button onclick="getMetrics()">Get EC2 Metrics</button>
+        <button onclick="goToDeleteInstance()">Delete EC2 Instance</button>
+    </div>
+    <script>
+        function launchInstance() {
+            window.location.href = "launch_instance.html";
+        }
+        function getLogs() {
+            window.location.href = "get_logs.html";
+        }
+        function getMetrics() {
+            window.location.href = "get_ec2_metrics.html";
+        }
+        function goToDeleteInstance() {
+            window.location.href = "delete_instance.html";
+        }
+    </script>
+</body>
+</html>
