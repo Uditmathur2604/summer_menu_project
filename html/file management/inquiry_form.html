@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquiry Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            width: 350px;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 2rem);
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .btn {
+            background: #e74c3c;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        #viewData {
+            background: #3498db;
+            margin-top: 1rem;
+        }
+        #viewData:hover {
+            background: #2980b9;
+        }
+        .deleteBtn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .deleteBtn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Inquiry Form</h1>
+        <form id="inquiryForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="contact_no">Contact No:</label>
+            <input type="text" id="contact_no" name="contact_no" required>
+            <label for="email_id">Email ID:</label>
+            <input type="text" id="email_id" name="email_id" required>
+            <label for="whatsapp_no">WhatsApp No:</label>
+            <input type="text" id="whatsapp_no" name="whatsapp_no" required>
+            <button type="submit" class="btn">Submit</button>
+            <button type="button" class="btn" id="viewData">View Data</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('inquiryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var name = document.getElementById('name').value;
+            var contact_no = document.getElementById('contact_no').value;
+            var email_id = document.getElementById('email_id').value;
+            var whatsapp_no = document.getElementById('whatsapp_no').value;
+
+            if (!name || !contact_no || !email_id || !whatsapp_no) {
+                alert("All fields are required!");
+                return;
+            }
+
+            var formData = {
+                name: name,
+                contact_no: contact_no,
+                email_id: email_id,
+                whatsapp_no: whatsapp_no
+            };
+
+            var storedData = JSON.parse(localStorage.getItem('inquiryData')) || [];
+            storedData.push(formData);
+            localStorage.setItem('inquiryData', JSON.stringify(storedData));
+
+            console.log("Form data stored successfully!");
+
+            document.getElementById('name').value = '';
+            document.getElementById('contact_no').value = '';
+            document.getElementById('email_id').value = '';
+            document.getElementById('whatsapp_no').value = '';
+        });
+
+        document.getElementById('viewData').addEventListener('click', function() {
+            var storedData = JSON.parse(localStorage.getItem('inquiryData')) || [];
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<h2>Stored Data</h2>';
+            storedData.forEach(function(data, index) {
+                resultDiv.innerHTML += `
+                    <div>
+                        <strong>Entry ${index + 1}</strong><br>
+                        Name: ${data.name}<br>
+                        Contact No: ${data.contact_no}<br>
+                        Email ID: ${data.email_id}<br>
+                        WhatsApp No: ${data.whatsapp_no}<br>
+                        <button class="deleteBtn" onclick="deleteEntry(${index})">Delete</button>
+                        <hr>
+                    </div>
+                `;
+            });
+        });
+
+        function deleteEntry(index) {
+            var storedData = JSON.parse(localStorage.getItem('inquiryData')) || [];
+            if (storedData.length > index) {
+                storedData.splice(index, 1);
+                localStorage.setItem('inquiryData', JSON.stringify(storedData));
+                document.getElementById('viewData').click();
+            }
+        }
+    </script>
+</body>
+</html>
