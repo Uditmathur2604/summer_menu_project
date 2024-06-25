@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get EC2 Metrics</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            text-align: center;
+            width: 350px;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 2rem);
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .btn {
+            background: #27ae60;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .btn:hover {
+            background: #219150;
+            transform: scale(1.05);
+        }
+        #result {
+            margin-top: 1.5rem;
+            color: #2c3e50;
+            font-size: 1rem;
+            white-space: pre-wrap; /* To handle text formatting */
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get EC2 Metrics</h1>
+        <form id="metricsForm">
+            <label for="instanceId">Instance ID:</label>
+            <input type="text" id="instanceId" name="instanceId" placeholder="Enter Instance ID" required>
+            <br>
+            <label for="awsAccessKey">AWS Access Key:</label>
+            <input type="text" id="awsAccessKey" name="awsAccessKey" placeholder="Enter AWS Access Key" required>
+            <br>
+            <label for="awsSecretKey">AWS Secret Key:</label>
+            <input type="text" id="awsSecretKey" name="awsSecretKey" placeholder="Enter AWS Secret Key" required>
+            <br>
+            <label for="regionName">Region Name:</label>
+            <input type="text" id="regionName" name="regionName" placeholder="Enter Region Name" required>
+            <br>
+            <button type="submit" class="btn">Get Metrics</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('metricsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(event.target);
+            var params = new URLSearchParams(formData);
+
+            fetch('/cgi-bin/get_ec2_metrics.py', {
+                method: 'POST',
+                body: params
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('result').innerText = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
