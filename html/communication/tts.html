@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech Example</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: linear-gradient(to bottom right, #333333, #1a1a1a);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #42a5f5;
+        }
+        #textToSpeak {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        #speakButton {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #42a5f5;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+        #speakButton:hover {
+            background-color: #1e88e5;
+        }
+        #languageSelect {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Text to Speech</h1>
+        <input type="text" id="textToSpeak" placeholder="Enter text here">
+        <select id="languageSelect">
+            <option value="en-US">English (United States)</option>
+            <option value="en-GB">English (United Kingdom)</option>
+            <option value="es-ES">Spanish (Spain)</option>
+            <option value="es-MX">Spanish (Mexico)</option>
+            <option value="fr-FR">French (France)</option>
+            <option value="de-DE">German (Germany)</option>
+            <option value="it-IT">Italian (Italy)</option>
+            <option value="pt-PT">Portuguese (Portugal)</option>
+            <option value="pt-BR">Portuguese (Brazil)</option>
+            <option value="nl-NL">Dutch (Netherlands)</option>
+            <option value="ru-RU">Russian (Russia)</option>
+            <option value="ja-JP">Japanese (Japan)</option>
+            <option value="zh-CN">Chinese (Mandarin, China)</option>
+            <option value="ko-KR">Korean (South Korea)</option>
+            <option value="ar-AE">Arabic (United Arab Emirates)</option>
+        </select>
+        <button id="speakButton">Speak</button>
+    </div>
+
+    <script>
+        document.getElementById('speakButton').addEventListener('click', function() {
+            var text = document.getElementById('textToSpeak').value;
+            var selectedLang = document.getElementById('languageSelect').value;
+
+            if (text.trim() !== "") {
+                var utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = selectedLang;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Please enter some text to speak");
+            }
+        });
+    </script>
+
+</body>
+</html>
