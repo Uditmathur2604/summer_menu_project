@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create S3 Bucket</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffa07a, #98d6fd);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      background-color: rgba(255, 255, 255, 0.9);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label, input, button {
+      width: 100%;
+      max-width: 300px;
+      margin: 5px 0;
+      height: 40px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    input {
+      border: 1px solid #ccc;
+      padding: 0 10px;
+    }
+
+    input:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 36px;
+      font-weight: bold;
+      color: #333;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    #output {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Create S3 Bucket</h1>
+    <form id="bucketForm">
+      <label for="bucketName">Bucket Name:</label>
+      <input type="text" id="bucketName" placeholder="Enter your Bucket Name" name="bucketName" required>
+      <label for="region">Region:</label>
+      <input type="text" id="region" placeholder="Region Name" name="region" required>
+      <label for="accessKeyId">Access Key ID:</label>
+      <input type="text" id="accessKeyId" placeholder="AccessKey ID" name="accessKeyId" required>
+      <label for="secretAccessKey">Secret Access Key:</label>
+      <input type="text" id="secretAccessKey" placeholder="SecretAccessKey" name="secretAccessKey" required>
+      <button id="button" type="button" onclick="createBucket()">Create Bucket</button>
+    </form>
+    <p id="output"></p>
+  </div>
+
+  <script>
+    function createBucket() {
+      const bucketName = document.getElementById('bucketName').value;
+      const region = document.getElementById('region').value;
+      const accessKeyId = document.getElementById('accessKeyId').value;
+      const secretAccessKey = document.getElementById('secretAccessKey').value;
+
+      const formData = new FormData();
+      formData.append('bucket_name', bucketName);
+      formData.append('region', region);
+      formData.append('aws_access_key_id', accessKeyId);
+      formData.append('aws_secret_access_key', secretAccessKey);
+
+      fetch('/cgi-bin/create_s3_bucket.py', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message) {
+            alert(data.message);
+          } else if (data.error) {
+            alert(`Error: ${data.error}`);
+          }
+        })
+        .catch(error => {
+          alert(`Error: ${error}`);
+        });
+    }
+  </script>
+</body>
+
+</html>
