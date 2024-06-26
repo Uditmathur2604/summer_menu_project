@@ -65,6 +65,7 @@
         <button onclick="getLogs()">Get Logs</button>
         <button onclick="getMetrics()">Get EC2 Metrics</button>
         <button onclick="goToDeleteInstance()">Delete EC2 Instance</button>
+        <button onclick="creates3bucket()">Create S3 Bucket</button>
     </div>
     <script>
         function launchInstance() {
@@ -78,6 +79,9 @@
         }
         function goToDeleteInstance() {
             window.location.href = "delete_instance.html";
+        }
+        function creates3bucket() {
+            window.location.href = "create_s3_bucket.html";
         }
     </script>
 </body>
