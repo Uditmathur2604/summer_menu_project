@@ -6,9 +6,9 @@ import boto3
 import json
 
 # Set your AWS credentials here
-aws_access_key_id = 'ENTER YOUR ACCESS KEY'
-aws_secret_access_key = 'ENTER YOUR SECRET KEY'
-region_name = 'ap-south-1'  # Replace with your AWS region, e.g., 'us-east-1'
+aws_access_key_id = '' #ENTER YOUR ACCESS KEY
+aws_secret_access_key = '' #ENTER YOUR SECRET KEY
+region_name = 'ap-south-1'  # Replace with your AWS region
 
 # Enable debugging
 cgitb.enable()
