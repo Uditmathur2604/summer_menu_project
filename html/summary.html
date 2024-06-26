@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Summary</title>
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            margin-bottom: 20px;
+        }
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .form-container input[type="submit"] {
+            background-color: #e74c3c;
+            color: #ecf0f1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Enter YouTube URL</h1>
+        <form action="/cgi-bin/summary.py" method="post">
+            <input type="text" name="url" placeholder="Enter YouTube URL" required>
+            <input type="submit" value="Get Summary">
+        </form>
+    </div>
+</body>
+</html>
