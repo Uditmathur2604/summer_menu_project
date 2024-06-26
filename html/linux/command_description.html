@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Command Description</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a; /* Dark background color */
+            color: #ffffff; /* White text color */
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #f44336; /* Red color for heading */
+        }
+        form {
+            margin-top: 20px;
+        }
+        label, input {
+            display: block;
+            margin: 10px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #ff9800;
+            border: none;
+            cursor: pointer;
+            color: #ffffff;
+        }
+        input[type="submit"]:hover {
+            background-color: #e68900;
+        }
+        pre {
+            background-color: #333333;
+            padding: 20px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Linux Command Description</h1>
+    <form action="/cgi-bin/get_command_description.py" method="post">
+        <label for="command">Enter Linux Command:</label>
+        <input type="text" id="command" name="command" required>
+        <input type="submit" value="Get Description">
+    </form>
+    <div id="result"></div>
+</body>
+</html>
