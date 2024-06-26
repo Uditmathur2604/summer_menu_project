@@ -66,6 +66,8 @@
         <button onclick="getMetrics()">Get EC2 Metrics</button>
         <button onclick="goToDeleteInstance()">Delete EC2 Instance</button>
         <button onclick="creates3bucket()">Create S3 Bucket</button>
+        <button onclick="describeinstance()">Describe Instance</button>
+        <button onclick="iam()">Create IAM User</button>
     </div>
     <script>
         function launchInstance() {
@@ -82,6 +84,12 @@
         }
         function creates3bucket() {
             window.location.href = "create_s3_bucket.html";
+        }
+        function describeinstance() {
+            window.location.href = "describe_instance.html";
+        }
+        function iam() {
+            window.location.href = "iam.html";
         }
     </script>
 </body>
