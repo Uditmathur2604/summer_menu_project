@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Main Page</h1>
+    <h1>Welcome to Web Services Arena</h1>
     <div class="button-container">
         <button onclick="goToAWS()">AWS Services</button>
         <button onclick="goToCommunication()">Communication Services</button>
@@ -69,6 +69,8 @@
         <button onclick="geoCoordinates()">Geo Coordinates</button>
         <button onclick="goToHtmlEditor()">HTML Editor</button>
         <button onclick="weatherForecast()">Weather Forecast</button>
+        <button onclick="Video()"> Video Streaming</button>
+
     </div>
     <script>
         function goToAWS() {
@@ -95,6 +97,11 @@
         function weatherForecast() {
             window.location.href = "weather_forecast.html";
         }
+        function Video() {
+            window.location.href = "camera.html";
+        }
+
+
     </script>
 </body>
 </html>
