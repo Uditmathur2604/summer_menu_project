@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+import cgi
+import cgitb
+import boto3
+from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+
+cgitb.enable()
+
+def upload_to_s3(fileitem, bucket_name, aws_access_key_id, aws_secret_access_key):
+    # Initialize S3 client
+    s3 = boto3.client(
+        's3',
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key
+    )
+
+    # Get the file information
+    filename = fileitem.filename
+    file_content = fileitem.file.read()
+
+    # Upload file to S3
+    try:
+        s3.put_object(Bucket=bucket_name, Key=filename, Body=file_content)
+        return f"File '{filename}' uploaded successfully to bucket '{bucket_name}'"
+    except NoCredentialsError:
+        return "Error: Invalid AWS credentials"
+    except PartialCredentialsError:
+        return "Error: Incomplete AWS credentials"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+def main():
+    print("Content-Type: text/html")
+    print()
+
+    form = cgi.FieldStorage()
+
+    # Get form data
+    fileitem = form['file']
+    bucket_name = form.getvalue('bucketName')
+    aws_access_key_id = form.getvalue('awsAccessKeyId')
+    aws_secret_access_key = form.getvalue('awsSecretAccessKey')
+
+    # Check if file was uploaded
+    if fileitem.filename:
+        message = upload_to_s3(fileitem, bucket_name, aws_access_key_id, aws_secret_access_key)
+    else:
+        message = "No file was uploaded"
+
+    # Output result
+    print(f"""
+    <html>
+    <body>
+        <h1>{message}</h1>
+        <a href="/upload_form.html">Go Back</a>
+    </body>
+    </html>
+    """)
+
+if _name_ == "_main_":
+    main()
