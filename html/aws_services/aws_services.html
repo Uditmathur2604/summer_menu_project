@@ -68,6 +68,7 @@
         <button onclick="creates3bucket()">Create S3 Bucket</button>
         <button onclick="describeinstance()">Describe Instance</button>
         <button onclick="iam()">Create IAM User</button>
+        <button onclick="uploadfile()">Upload file on S3 bucket</button>
     </div>
     <script>
         function launchInstance() {
@@ -90,6 +91,9 @@
         }
         function iam() {
             window.location.href = "iam.html";
+        }
+        function uploadfile() {
+            window.location.href = "upload_to_s3.html";
         }
     </script>
 </body>
