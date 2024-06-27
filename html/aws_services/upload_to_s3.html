@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload File to S3</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #72EDF2 10%, #5151E5 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #000;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+        .form-container h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-align: center;
+            color: #000;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #000;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #000;
+        }
+        .form-container input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .form-container input[type="submit"]:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Upload File to S3</h1>
+        <form action="/cgi-bin/upload_to_s3.py" method="post" enctype="multipart/form-data">
+            <label for="file">Choose File:</label>
+            <input type="file" id="file" name="file" required>
+
+            <label for="bucketName">S3 Bucket Name:</label>
+            <input type="text" id="bucketName" name="bucketName" required>
+
+            <label for="awsAccessKeyId">AWS Access Key ID:</label>
+            <input type="text" id="awsAccessKeyId" name="awsAccessKeyId" required>
+
+            <label for="awsSecretAccessKey">AWS Secret Access Key:</label>
+            <input type="text" id="awsSecretAccessKey" name="awsSecretAccessKey" required>
+
+            <input type="submit" value="Upload">
+        </form>
+    </div>
+</body>
+</html>
