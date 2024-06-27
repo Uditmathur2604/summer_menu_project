@@ -56,6 +56,10 @@
                 padding: 15px 0;
             }
         }
+        body.dark-mode {
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -69,11 +73,12 @@
         <button onclick="geoCoordinates()">Geo Coordinates</button>
         <button onclick="goToHtmlEditor()">HTML Editor</button>
         <button onclick="weatherForecast()">Weather Forecast</button>
-        <button onclick="Video()"> Video Streaming</button>
-        <button onclick="summary()"> Video Summary</button>
-        <button onclick="book()"> Book Recommendations</button>
-        <button onclick="calculator()"> Calculator Suite</button>
+        <button onclick="Video()">Video Streaming</button>
+        <button onclick="summary()">Video Summary</button>
+        <button onclick="book()">Book Recommendations</button>
+        <button onclick="calculator()">Calculator Suite</button>
     </div>
+    <button id="darkModeToggle" style="margin-top: 20px;">Toggle Dark Mode</button>
     <script>
         function goToAWS() {
             window.location.href = "aws_services.html";
@@ -112,6 +117,9 @@
             window.location.href = "calculator_suite.html";
         }
 
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+        });
     </script>
 </body>
 </html>
