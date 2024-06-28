@@ -7,17 +7,65 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        body {
+            background: linear-gradient(to right, #1f2937, #4b5563);
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+        }
+
+        .header {
+            background: #111827;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+        }
+
+        .section-bg {
+            background: #1f2937;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .rounded-button {
+            border-radius: 30px;
+            background: linear-gradient(to right, #FF7E5F, #FEB47B); /* Sunset */
+            color: white;
+            padding: 10px 20px;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .rounded-button:hover {
+            background: linear-gradient(to right, #6A0572, #A4508B); /* Purple Gradient */
+            transform: translateY(-2px);
+        }
+
+        .input-field {
+            border: 2px solid #3b82f6;
+            background: #1f2937;
+            padding: 10px 15px;
+            border-radius: 30px;
+            color: white;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #9333ea;
+            outline: none;
+        }
+
         .loader {
             border: 4px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 4px solid #3498db;
-            width: 30px;
-            height: 30px;
+            border-top: 4px solid #9333ea;
+            width: 40px;
+            height: 40px;
             -webkit-animation: spin 2s linear infinite; /* Safari */
             animation: spin 2s linear infinite;
         }
 
-        /* Safari */
         @-webkit-keyframes spin {
             0% { -webkit-transform: rotate(0deg); }
             100% { -webkit-transform: rotate(360deg); }
@@ -27,45 +75,57 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .output-box {
+            background: #374151;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 20px;
+            height: 200px;
+            overflow-y: auto;
+        }
     </style>
 </head>
-<body class="bg-white text-blue-500" style="font-family: 'Roboto', sans-serif;">
-    <header class="bg-gray-900 text-white text-center py-6 border-b border-gray-700">
+<body>
+    <header class="header text-center text-white">
         <h1 class="text-4xl font-bold">Docker World</h1>
     </header>
 
-    <main class="container mx-auto mt-10 px-4">
+    <main class="main-container mt-10 px-4">
         <!-- Docker Images Section -->
-        <section class="bg-gray-800 shadow-lg rounded-lg p-8 mb-10">
-            <h2 class="text-3xl font-semibold mb-6">Pulled Images</h2>
-            <div class="flex flex-col md:flex-row items-center md:justify-between mb-6 space-y-4 md:space-y-0">
-                <input type="text" id="imageName" class="border border-gray-600 bg-gray-700 p-3 rounded w-full md:w-auto text-blue-500 placeholder-gray-500" placeholder="Enter Image Name">
-                <div class="flex space-x-4">
-                    <button id="pullImage" onclick="PullImage()" class="bg-blue-600 text-white p-3 rounded hover:bg-blue-700">Pull Image</button>
-                    <button id="getAllImages" onclick="GetAllImages()" class="bg-gray-700 text-white p-3 rounded hover:bg-gray-600">Get All Images</button>
-                    <button id="showRunningContainers" onclick="getAllRunningContainers()" class="bg-gray-700 text-white p-3 rounded hover:bg-gray-600">Show Running Containers</button>
+        <section class="section-bg shadow-lg mb-10">
+            <h2 class="text-3xl font-semibold mb-6 text-center">Docker Management</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <input type="text" id="imageName" class="input-field w-full mb-4" placeholder="Enter Image Name">
+                    <button id="pullImage" onclick="PullImage()" class="rounded-button w-full mb-4">Pull Image</button>
+                </div>
+                <div>
+                    <button id="getAllImages" onclick="GetAllImages()" class="rounded-button w-full mb-4">Get All Images</button>
+                    <button id="showRunningContainers" onclick="getAllRunningContainers()" class="rounded-button w-full mb-4">Show Running Containers</button>
                 </div>
             </div>
             <div id="loading" class="loader mx-auto" style="display: none;"></div>
-            <div id="getOutput" class="border border-gray-600 p-4 rounded h-64 overflow-auto bg-gray-900 text-white"></div>
+            <div id="getOutput" class="output-box"></div>
         </section>
 
         <!-- Container Management Section -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div class="bg-gray-800 shadow-lg rounded-lg p-8">
-                <h2 class="text-2xl font-semibold mb-6">Launch a Container</h2>
-                <input type="text" id="launchAnContainer" class="border border-gray-600 bg-gray-700 p-3 rounded w-full mb-4 text-blue-500 placeholder-gray-500" placeholder="Enter Container Name">
-                <button id="launchContainer" onclick="launchAnContainer()" class="bg-blue-600 text-white p-3 rounded w-full hover:bg-blue-700">Launch a Container</button>
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="section-bg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Launch a Container</h2>
+                <input type="text" id="launchAnContainer" class="input-field w-full mb-4" placeholder="Enter Container Name">
+                <button id="launchContainer" onclick="launchAnContainer()" class="rounded-button w-full">Launch Container</button>
             </div>
-            <div class="bg-gray-800 shadow-lg rounded-lg p-8">
-                <h2 class="text-2xl font-semibold mb-6">Start Container</h2>
-                <input type="text" id="containerNameStart" class="border border-gray-600 bg-gray-700 p-3 rounded w-full mb-4 text-blue-500 placeholder-gray-500" placeholder="Enter Container Name">
-                <button id="startContainer" onclick="StartContainer()" class="bg-blue-600 text-white p-3 rounded w-full hover:bg-blue-700">Start Container</button>
+            <div class="section-bg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Start Container</h2>
+                <input type="text" id="containerNameStart" class="input-field w-full mb-4" placeholder="Enter Container Name">
+                <button id="startContainer" onclick="StartContainer()" class="rounded-button w-full">Start Container</button>
             </div>
-            <div class="bg-gray-800 shadow-lg rounded-lg p-8">
-                <h2 class="text-2xl font-semibold mb-6">Stop Container</h2>
-                <input type="text" id="containerNameStop" class="border border-gray-600 bg-gray-700 p-3 rounded w-full mb-4 text-blue-500 placeholder-gray-500" placeholder="Enter Container Name">
-                <button id="stopContainer" onclick="StopContainer()" class="bg-red-600 text-white p-3 rounded w-full hover:bg-red-700">Stop Container</button>
+            <div class="section-bg shadow-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-center">Stop Container</h2>
+                <input type="text" id="containerNameStop" class="input-field w-full mb-4" placeholder="Enter Container Name">
+                <button id="stopContainer" onclick="StopContainer()" class="rounded-button w-full">Stop Container</button>
             </div>
         </section>
     </main>
@@ -81,7 +141,7 @@
 
         function GetAllImages() {
             showLoader();
-            const url = "http://13.127.49.205/cgi-bin/tast.py?cmd=docker%20images";
+            const url = "http://13.202.76.124/cgi-bin/tast.py?cmd=docker%20images";
 
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
@@ -91,7 +151,6 @@
                     if (xhr.status == 200) {
                         document.getElementById("getOutput").innerHTML = xhr.responseText;
                     } else {
-                        console.log(xhr.response);
                         document.getElementById("getOutput").innerHTML = "Something went wrong";
                     }
                 }
@@ -102,7 +161,7 @@
         function PullImage() {
             showLoader();
             const imageName = document.getElementById("imageName").value;
-            const url = `http://13.127.49.205/cgi-bin/tast.py?cmd=docker%20pull%20${imageName}`;
+            const url = `http://13.202.76.124/cgi-bin/tast.py?cmd=docker%20pull%20${encodeURIComponent(imageName)}`;
 
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
@@ -112,7 +171,6 @@
                     if (xhr.status == 200) {
                         document.getElementById("getOutput").innerHTML = xhr.responseText;
                     } else {
-                        console.log(xhr.response);
                         document.getElementById("getOutput").innerHTML = "Something went wrong";
                     }
                 }
@@ -123,7 +181,7 @@
         function StartContainer() {
             showLoader();
             const containerName = document.getElementById("containerNameStart").value;
-            const url = `http://13.127.49.205/cgi-bin/tast.py?cmd=docker%20start%20${containerName}`;
+            const url = `http://13.202.76.124/cgi-bin/tast.py?cmd=docker%20start%20${encodeURIComponent(containerName)}`;
 
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
@@ -133,7 +191,6 @@
                     if (xhr.status == 200) {
                         document.getElementById("getOutput").innerHTML = xhr.responseText;
                     } else {
-                        console.log(xhr.response);
                         document.getElementById("getOutput").innerHTML = "Something went wrong";
                     }
                 }
@@ -144,7 +201,7 @@
         function StopContainer() {
             showLoader();
             const containerName = document.getElementById("containerNameStop").value;
-            const url = `http://13.127.49.205/cgi-bin/tast.py?cmd=docker%20stop%20${containerName}`;
+            const url = `http://13.202.76.124/cgi-bin/tast.py?cmd=docker%20stop%20${encodeURIComponent(containerName)}`;
 
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
@@ -154,7 +211,6 @@
                     if (xhr.status == 200) {
                         document.getElementById("getOutput").innerHTML = xhr.responseText;
                     } else {
-                        console.log(xhr.response);
                         document.getElementById("getOutput").innerHTML = "Something went wrong";
                     }
                 }
@@ -164,7 +220,7 @@
 
         function getAllRunningContainers() {
             showLoader();
-            const url = "http://13.127.49.205/cgi-bin/tast.py?cmd=docker%20ps";
+            const url = "http://13.202.76.124/cgi-bin/tast.py?cmd=docker%20ps";
 
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
@@ -174,7 +230,6 @@
                     if (xhr.status == 200) {
                         document.getElementById("getOutput").innerHTML = xhr.responseText;
                     } else {
-                        console.log(xhr.response);
                         document.getElementById("getOutput").innerHTML = "Something went wrong";
                     }
                 }
@@ -185,7 +240,7 @@
         function launchAnContainer(){
             showLoader();
             const containerName = document.getElementById("launchAnContainer").value;
-            const url = `http://13.127.49.205/cgi-bin/tast.py?cmd=docker%20run%20-dit%20${containerName}`;
+            const url = `http://13.202.76.124/cgi-bin/tast.py?cmd=docker%20run%20-dit%20${encodeURIComponent(containerName)}`;
 
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
@@ -195,7 +250,6 @@
                     if (xhr.status == 200) {
                         document.getElementById("getOutput").innerHTML = xhr.responseText;
                     } else {
-                        console.log(xhr.response);
                         document.getElementById("getOutput").innerHTML = "Something went wrong";
                     }
                 }
