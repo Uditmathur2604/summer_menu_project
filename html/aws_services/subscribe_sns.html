@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subscribe to AWS SNS Topic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-4xl font-bold mb-8">Subscribe to AWS SNS Topic</h1>
+    <form id="snsSubscriptionForm" class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-lg space-y-6">
+        <div>
+            <label for="topicArn" class="block text-sm font-medium mb-2">Topic ARN:</label>
+            <input type="text" id="topicArn" name="topicArn" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <div>
+            <label for="protocol" class="block text-sm font-medium mb-2">Protocol:</label>
+            <select id="protocol" name="protocol" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+                <option value="email">Email</option>
+                <option value="sms">SMS</option>
+                <option value="http">HTTP</option>
+                <option value="https">HTTPS</option>
+            </select>
+        </div>
+        <div>
+            <label for="endpoint" class="block text-sm font-medium mb-2">Endpoint:</label>
+            <input type="text" id="endpoint" name="endpoint" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <div>
+            <label for="awsAccessKeyId" class="block text-sm font-medium mb-2">AWS Access Key ID:</label>
+            <input type="text" id="awsAccessKeyId" name="awsAccessKeyId" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <div>
+            <label for="awsSecretAccessKey" class="block text-sm font-medium mb-2">AWS Secret Access Key:</label>
+            <input type="password" id="awsSecretAccessKey" name="awsSecretAccessKey" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <div>
+            <label for="regionName" class="block text-sm font-medium mb-2">Region Name:</label>
+            <input type="text" id="regionName" name="regionName" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded font-semibold transition transform hover:scale-105">Subscribe</button>
+    </form>
+    <div id="result" class="mt-6 p-4 bg-gray-800 rounded-lg w-full max-w-lg text-gray-300"></div>
+
+    <script>
+        document.getElementById('snsSubscriptionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var topicArn = document.getElementById('topicArn').value.trim();
+            var protocol = document.getElementById('protocol').value.trim();
+            var endpoint = document.getElementById('endpoint').value.trim();
+            var awsAccessKeyId = document.getElementById('awsAccessKeyId').value.trim();
+            var awsSecretAccessKey = document.getElementById('awsSecretAccessKey').value.trim();
+            var regionName = document.getElementById('regionName').value.trim();
+
+            fetch('/cgi-bin/subscribe_sns.py', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    topicArn: topicArn,
+                    protocol: protocol,
+                    endpoint: endpoint,
+                    awsAccessKeyId: awsAccessKeyId,
+                    awsSecretAccessKey: awsSecretAccessKey,
+                    regionName: regionName
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                if (data.error) {
+                    resultDiv.innerHTML = '<p class="text-red-500">Error: ' + data.error + '</p>';
+                } else {
+                    resultDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = '<p class="text-red-500">Error: ' + error.message + '</p>';
+            });
+        });
+    </script>
+</body>
+</html>
