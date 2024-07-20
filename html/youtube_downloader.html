@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #222;
+        }
+        .download-button, .delete-button {
+            background: #d32f2f;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .file-list {
+            margin-top: 20px;
+        }
+        .file-item {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .message {
+            color: #27ae60;
+            font-size: 16px;
+        }
+        .error {
+            color: #c0392b;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube Downloader</h1>
+        <form action="/cgi-bin/youtube_downloader.py" method="post">
+            <input type="hidden" name="action" value="download">
+            <label for="url">YouTube URL:</label><br>
+            <input type="text" id="url" name="url" required><br><br>
+            <input type="submit" value="Download" class="download-button">
+        </form>
+        <div id="message"></div>
+        <h2>Downloaded Videos</h2>
+        <div id="file-list" class="file-list">
+            <!-- Downloaded files will be listed here -->
+        </div>
+    </div>
+    <script>
+        function fetchDownloadedFiles() {
+            fetch('/cgi-bin/youtube_downloader.py?action=list')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('file-list').innerHTML = data;
+                })
+                .catch(error => console.error('Error fetching file list:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchDownloadedFiles);
+    </script>
+</body>
+</html>
