@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create AWS SNS Topic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-gray-900 to-gray-600 text-white flex flex-col items-center justify-center min-h-screen p-4">
+    <h1 class="text-4xl font-bold mb-8">Create AWS SNS Topic</h1>
+    <form id="topicForm" class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-lg space-y-6">
+        <div>
+            <label for="topicName" class="block text-sm font-medium mb-2">Topic Name:</label>
+            <input type="text" id="topicName" name="topicName" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <div>
+            <label for="awsAccessKeyId" class="block text-sm font-medium mb-2">AWS Access Key ID:</label>
+            <input type="text" id="awsAccessKeyId" name="awsAccessKeyId" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <div>
+            <label for="awsSecretAccessKey" class="block text-sm font-medium mb-2">AWS Secret Access Key:</label>
+            <input type="password" id="awsSecretAccessKey" name="awsSecretAccessKey" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <div>
+            <label for="regionName" class="block text-sm font-medium mb-2">Region Name:</label>
+            <input type="text" id="regionName" name="regionName" required class="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 focus:ring focus:ring-blue-500 outline-none text-gray-300">
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded font-semibold transition transform hover:scale-105">Create Topic</button>
+    </form>
+    <div id="result" class="mt-6 p-4 bg-gray-800 rounded-lg w-full max-w-lg text-gray-300"></div>
+
+    <script>
+        document.getElementById('topicForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var topicName = document.getElementById('topicName').value.trim();
+            var awsAccessKeyId = document.getElementById('awsAccessKeyId').value.trim();
+            var awsSecretAccessKey = document.getElementById('awsSecretAccessKey').value.trim();
+            var regionName = document.getElementById('regionName').value.trim();
+
+            fetch('/cgi-bin/create_topic.py', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    topicName: topicName,
+                    awsAccessKeyId: awsAccessKeyId,
+                    awsSecretAccessKey: awsSecretAccessKey,
+                    regionName: regionName
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                if (data.error) {
+                    resultDiv.innerHTML = '<p class="text-red-500">Error: ' + data.error + '</p>';
+                } else {
+                    resultDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = '<p class="text-red-500">Error: ' + error.message + '</p>';
+            });
+        });
+    </script>
+</body>
+</html>
